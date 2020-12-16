@@ -25,7 +25,7 @@ namespace StatusChecker.Controllers {
             if (ModelState.IsValid && model.InputLinks != null && model.Links.Any()) {
                 return View("StatusView", model);
             }
-            return Error();
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> GetSiteStatus(string url) {
@@ -47,12 +47,15 @@ namespace StatusChecker.Controllers {
                     }
                 }
                 return PartialView("StatusResponseView", new StatusResponseViewModel {
-                    Title = $"Error with {url}",
+                    Title = "Input correct url, please",
                     Status = 400
                 });
             } catch (Exception ex) {
                 _logger?.LogError($"{DateTime.UtcNow} | ERROR | {ex.Message}{Environment.NewLine}{ex.StackTrace}");
-                return Error();
+                return PartialView("StatusResponseView", new StatusResponseViewModel {
+                    Title = ex.Message,
+                    Status = 400
+                });
             }
         }
 

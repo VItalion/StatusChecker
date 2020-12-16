@@ -1,0 +1,11 @@
+﻿@model StatusChecker.Models.LinksViewModel
+@{
+    ViewData["Title"] = "Status checker";
+}
+
+<div class="text-center">
+    <form asp-controller="Home" asp-action="CheckStatus" asp-antiforgery="true" style="min-height:500px;">
+        <textarea asp-for="InputLinks" style="width:80%; display:block; min-height:400px;"></textarea>
+        <input type="submit" value="Check" style="display: block;"/>
+    </form>
+</div>

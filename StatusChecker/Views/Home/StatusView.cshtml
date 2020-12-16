@@ -1,0 +1,24 @@
+﻿@model StatusChecker.Models.LinksViewModel
+@{ViewData["Title"] = "Results"; }
+
+
+@Html.ActionLink("Try another links", "Index", "Home")
+
+<table id="result">
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script language="javascript">
+getStatus = function (link) {
+    $.get('/Home/GetSiteStatus/', { url: link }).done(function (data) {
+        var oldData = $('#result').html();
+        $('#result').html(oldData + data);
+    });
+}
+
+$(function () {
+    @foreach (var link in Model.Links) {
+        @:getStatus('@link');
+    }
+});
+</script>
